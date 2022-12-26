@@ -1,0 +1,30 @@
+<?php
+
+namespace Project\Services;
+
+use Project\Exceptions\FileNotFoundException;
+
+class FileReader
+{
+    public static $dataFilesPath = __DIR__ . '/../../DataFiles/';
+
+    /** Получение данных из файла JSON и декодирование данных
+     * @param $fileName
+     * @return mixed
+     * @throws FileNotFoundException
+     */
+    public static function getDataFromJsonFile($fileName)
+    {
+        $fullPath = self::$dataFilesPath . $fileName;
+
+        if (!file_exists($fullPath)) {
+            throw new FileNotFoundException( "Файл {$fileName} не найден!");
+        }
+
+        $file = file_get_contents($fullPath);
+
+        return json_decode($file);
+    }
+
+
+}
