@@ -38,11 +38,8 @@ try {
 
 } catch (PageNotFoundException $e) {
     $view = new View(__DIR__ . '/../templates/errors/');
-    $view->renderHtml('error.php', ['error' => $e->getMessage()], 404);
-} catch (FileNotFoundException $e) {
-    $view = new View(__DIR__ . '/../templates/errors/');
-    $view->renderHtml('error.php', ['error' => $e->getMessage()], 204);
+    $view->renderHtml('404.php', ['error' => $e->getMessage()], 404);
 } catch (DataNotFoundException $e) {
     $view = new View(__DIR__ . '/../templates/errors/');
-    $view->renderHtml('error.php', ['error' => $e->getMessage()], 204);
+    $view->renderHtml('error.php', ['error' => $e->getMessage()], 500);
 }

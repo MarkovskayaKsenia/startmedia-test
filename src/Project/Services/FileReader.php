@@ -2,7 +2,7 @@
 
 namespace Project\Services;
 
-use Project\Exceptions\FileNotFoundException;
+use Project\Exceptions\DataNotFoundException;
 
 class FileReader
 {
@@ -11,14 +11,14 @@ class FileReader
     /** Получение данных из файла JSON и декодирование данных
      * @param $fileName
      * @return mixed
-     * @throws FileNotFoundException
+     * @throws DataNotFoundException
      */
     public static function getDataFromJsonFile($fileName)
     {
         $fullPath = self::$dataFilesPath . $fileName;
 
         if (!file_exists($fullPath)) {
-            throw new FileNotFoundException( "Файл {$fileName} не найден!");
+            throw new DataNotFoundException( "Файл {$fileName} не найден!");
         }
 
         $file = file_get_contents($fullPath);
