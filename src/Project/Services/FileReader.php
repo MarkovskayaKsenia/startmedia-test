@@ -6,7 +6,7 @@ use Project\Exceptions\DataNotFoundException;
 
 class FileReader
 {
-    public static $dataFilesPath = __DIR__ . '/../../DataFiles/';
+    public static $dataFilesPath = __DIR__ . '/../../../DataFiles/';
 
     /** Получение данных из файла JSON и декодирование данных
      * @param $fileName
