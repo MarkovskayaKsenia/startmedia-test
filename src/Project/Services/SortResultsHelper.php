@@ -54,7 +54,6 @@ class SortResultsHelper
         usort($cars, function (Car $a, Car $b) use ($attemptNumber) {
 
             $c = isset($a->getAttempts()[$attemptNumber]) ? $a->getAttempts()[$attemptNumber]->getResult() : 0;
-
             $d = isset($b->getAttempts()[$attemptNumber]) ? $b->getAttempts()[$attemptNumber]->getResult() : 0;
 
             return static::compare($c, $d);

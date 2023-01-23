@@ -29,7 +29,7 @@ class AttemptsService
      * @param int $maxAttempts
      * @return false|int
      */
-    public static function checkAttemptSortRequest(string $sort, int $maxAttempts)
+    public static function checkAttemptSortRequest(string $sort, int $maxAttempts) :int
     {
         $attemptArray = static::getDataFromRequest($sort);
         $attemptNumber = (int) (($attemptArray[1]) ?? 0);
@@ -43,16 +43,15 @@ class AttemptsService
             return $attemptNumber;
         }
 
-        return false;
+        return 0;
     }
 
-    /**
+    /** Разделение данных в параметре запроса для удобства манипулирвоания
      * @param string $sort
      * @return string[]
      */
-    public static function getDataFromRequest(string $sort)
+    protected static function getDataFromRequest(string $sort) :array
     {
         return explode('_', $sort);
     }
-
 }
