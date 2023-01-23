@@ -63,6 +63,7 @@ class Car extends BaseModel
     {
         $attempts = Attempt::findAll();
         $cars = static::findAll();
+        $attemptsGroups = [];
 
         if (!$cars) {
             throw new DataNotFoundException("Нет данных в файле " . static::filename());
@@ -73,12 +74,15 @@ class Car extends BaseModel
         }
 
         foreach ($attempts as $attempt) {
-            foreach ($cars as $car) {
-                if ($attempt->getCarId() === $car->id) {
-                    $car->attempts[] = $attempt;
-                }
+            $attemptsGroups[$attempt->getCarId()][] = $attempt;
+        }
+
+        foreach ($cars as $car) {
+            if (isset($attemptsGroups[$car->id])) {
+                $car->attempts = $attemptsGroups[$car->id];
             }
         }
+
         return $cars;
     }
 

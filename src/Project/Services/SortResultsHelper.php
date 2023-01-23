@@ -11,29 +11,19 @@ class SortResultsHelper
      * @param $sort
      * @return array
      */
-    public static function sortResults(array $cars, string $sort = 'total_sum'): array
+    public static function sortResults(array $cars, int $maxAttempts, string $sort = 'total_sum'): array
     {
         if ($sort === 'total_sum') {
             return static::sortByBestSum($cars);
         }
 
-        if ($sort === 'attempt_1') {
-            return static::sortByAttemptNumber($cars, 0);
+        $attemptNumber = AttemptsService::checkAttemptSortRequest($sort, $maxAttempts);
+
+        if (!$attemptNumber) {
+            return $cars;
         }
 
-        if ($sort === 'attempt_2') {
-            return static::sortByAttemptNumber($cars, 1);
-        }
-
-        if ($sort === 'attempt_3') {
-            return static::sortByAttemptNumber($cars, 2);
-        }
-
-        if ($sort === 'attempt_4') {
-            return static::sortByAttemptNumber($cars, 3);
-        }
-
-        return $cars;
+        return static::sortByAttemptNumber($cars, $attemptNumber - 1);
     }
 
     /** Сортировка по наилучшей сумме результатов
@@ -46,7 +36,7 @@ class SortResultsHelper
             $c = $a->getTotalSum();
             $d = $b->getTotalSum();
 
-            return  static::compare($c, $d);
+            return static::compare($c, $d);
 
         });
 
@@ -60,12 +50,14 @@ class SortResultsHelper
      */
     public static function sortByAttemptNumber(array $cars, int $attemptNumber)
     {
+
         usort($cars, function (Car $a, Car $b) use ($attemptNumber) {
 
-            $c = $a->getAttempts()[$attemptNumber]->getResult();
-            $d = $b->getAttempts()[$attemptNumber]->getResult();
+            $c = isset($a->getAttempts()[$attemptNumber]) ? $a->getAttempts()[$attemptNumber]->getResult() : 0;
 
-           return  static::compare($c, $d);
+            $d = isset($b->getAttempts()[$attemptNumber]) ? $b->getAttempts()[$attemptNumber]->getResult() : 0;
+
+            return static::compare($c, $d);
 
         });
 
@@ -76,7 +68,7 @@ class SortResultsHelper
      * @param array $cars
      * @return array
      */
-    public static function sortAndSetPlaces(array $cars)
+    public static function sortAndSetPlaces(array $cars,)
     {
         $place = 0;
         $cars = static::sortByBestSum($cars);
@@ -92,9 +84,6 @@ class SortResultsHelper
      */
     private static function compare($c, $d): int
     {
-        if ( $c == $d) {
-            return 0;
-        }
-        return ($c > $d) ? -1 : 1;
+        return $d <=> $c;
     }
 }

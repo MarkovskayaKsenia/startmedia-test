@@ -54,6 +54,7 @@ h1 {
 
 .sort-buttons {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 10px;
     font-weight: bold;
@@ -111,6 +112,7 @@ h1 {
 
 .sort-label {
     position: relative;
+    width: 130px;
     line-height: 30px;
     font-size: 18px;
     cursor:pointer;
