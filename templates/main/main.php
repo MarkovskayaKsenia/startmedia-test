@@ -13,12 +13,11 @@ use Project\Services\HtmlHelper;
                 <legend>Сортировка результатов</legend>
                 <div class="sort-buttons">
                     <?php for($i = 0; $i < $maxAttempts; $i++): ?>
-                        <?php $j = $i+1 ;?>
-                        <input class="hidden" type="radio" name="sort" value="attempt_<?= $j; ?>" id="attempt_<?= $j; ?>"
-                            <?= HtmlHelper::isRadioButtonChecked($_GET, 'attempt_' . $j); ?>
+                        <input class="hidden" type="radio" name="sort" value="attempt_<?= $i+1; ?>" id="attempt_<?= $i+1; ?>"
+                            <?= HtmlHelper::isRadioButtonChecked($_GET, 'attempt_' . $i+1); ?>
                         >
-                        <label for="attempt_<?= $j; ?>" class="sort-label">
-                            Попытка №<?= $j; ?>
+                        <label for="attempt_<?= $i+1; ?>" class="sort-label">
+                            Попытка №<?= $i+1; ?>
                         </label>
                     <?php endfor;?>
 
@@ -44,8 +43,7 @@ use Project\Services\HtmlHelper;
                 <th class="column-3">Город</th>
                 <th class="column-5">Машина</th>
                 <?php for($i = 0; $i < $maxAttempts; $i++): ?>
-                <?php $j = $i+1 ;?>
-                <th class="column-1 attempt_<?= $j; ?>">Попытка №<?= $j; ?></th>
+                <th class="column-1 attempt_<?= $i+1; ?>">Попытка №<?= $i+1; ?></th>
                 <?php endfor;?>
                 <th class="column-1 total_sum">Общая сумма</th>
                 <th class="column-1">Итоговое место</th>
@@ -61,7 +59,6 @@ use Project\Services\HtmlHelper;
                         <td><?= $car->getCity(); ?></td>
                         <td><?= $car->getCar(); ?></td>
                         <?php for($i = 0; $i < $maxAttempts; $i++): ?>
-                            <?php $j = $i+1 ;?>
                             <td><?= $car->getPoints()[$i] ?? null; ?></td>
                         <?php endfor;?>
 

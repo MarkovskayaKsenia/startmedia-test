@@ -1,13 +1,11 @@
 <?php
 
-use Project\Exceptions\DataNotFoundException;
-use Project\Exceptions\FileNotFoundException;
 use Project\Exceptions\PageNotFoundException;
 use Project\View\View;
 
 try {
     spl_autoload_register(function (string $className) {
-        require_once __DIR__ . '/../src/' . $className . '.php';
+        require_once __DIR__ . '/../src/' . str_replace('\\', '/', $className) . '.php';
     });
 
 

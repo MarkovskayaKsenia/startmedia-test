@@ -30,14 +30,13 @@ class SortResultsHelper
      * @param array $cars
      * @return array
      */
-    public static function sortByBestSum(array $cars)
+    protected static function sortByBestSum(array $cars)
     {
         usort($cars, function (Car $a, Car $b) {
             $c = $a->getTotalSum();
             $d = $b->getTotalSum();
 
             return static::compare($c, $d);
-
         });
 
         return $cars;
@@ -48,7 +47,7 @@ class SortResultsHelper
      * @param int $attemptNumber
      * @return array
      */
-    public static function sortByAttemptNumber(array $cars, int $attemptNumber)
+    protected static function sortByAttemptNumber(array $cars, int $attemptNumber)
     {
 
         usort($cars, function (Car $a, Car $b) use ($attemptNumber) {
@@ -57,7 +56,6 @@ class SortResultsHelper
             $d = isset($b->getAttempts()[$attemptNumber]) ? $b->getAttempts()[$attemptNumber]->getResult() : 0;
 
             return static::compare($c, $d);
-
         });
 
         return $cars;
